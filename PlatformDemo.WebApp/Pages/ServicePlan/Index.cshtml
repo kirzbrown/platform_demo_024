@@ -1,0 +1,35 @@
+﻿@page
+@model IndexModel
+
+<link rel="stylesheet" href="~/css/your-stylesheet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<div class="d-flex justify-content-between align-items-center mb-3"> <!-- Use flexbox for alignment -->
+    <h2>Service Plans</h2>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Create New Service Plan <!-- Add plus icon -->
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date of Purchase</th>
+            <th>Timesheet Count</th> <!-- New column for Timesheet Count -->
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ServicePlans)
+        {
+            <tr>
+                <td>@item.DateOfPurchase.ToShortDateString()</td> <!-- Format date if desired -->
+                <td>@item.TimeSheets?.Count()</td> <!-- Display the count of timesheets -->
+                <td class="text-end">
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

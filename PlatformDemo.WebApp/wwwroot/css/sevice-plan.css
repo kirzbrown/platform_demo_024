@@ -1,0 +1,5 @@
+﻿.text-right {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    gap: 5px; /* Optional: Add some space between buttons */
+}

@@ -1,20 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using PlatformDemo.DAL.Data;
+using PlatformDemo.DAL.Model;
+using System.ComponentModel.DataAnnotations;
 
-namespace PlatformDemo.WebApp.Pages
+namespace PlatformDemo.WebApp.Pages;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    public IActionResult OnGet()
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
-        }
+        return RedirectToPage("/ServicePlan/Index");
     }
 }

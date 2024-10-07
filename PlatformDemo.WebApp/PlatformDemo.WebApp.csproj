@@ -4,6 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>89e0092f-89e1-411a-b686-dfdecc907444</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\SerivcePlan\**" />
+    <Content Remove="Pages\SerivcePlan\**" />
+    <EmbeddedResource Remove="Pages\SerivcePlan\**" />
+    <None Remove="Pages\SerivcePlan\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlatformDemo.DAL\PlatformDemo.DAL.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,96 @@
+﻿@page "{id:int}"
+@model EditModel
+
+<h2>Edit Service Plan</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" /> <!-- Hidden field for the Id -->
+
+    <div class="form-group mb-3">
+        <label asp-for="ServicePlan.DateOfPurchase"></label>
+        <input asp-for="ServicePlan.DateOfPurchase" class="form-control" />
+        <span asp-validation-for="ServicePlan.DateOfPurchase" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-4">Edit TimeSheets</h4>
+
+    <div class="accordion" id="timeSheetsAccordion">
+        @for (int i = 0; i < Model.TimeSheets.Count; i++)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading@(i + 1)">
+                    <button class="accordion-button @(ViewData["OpenAccordion"] as List<int> != null && ((List<int>)ViewData["OpenAccordion"]).Contains(i + 1) ? "collapsed" : "")" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(i + 1)" aria-expanded="@(ViewData["OpenAccordion"] as List<int> != null && ((List<int>)ViewData["OpenAccordion"]).Contains(i + 1) ? "true" : "false")" aria-controls="collapse@(i + 1)">
+                        TimeSheet @(i + 1)
+                    </button>
+                </h2>
+                <div id="collapse@(i + 1)" class="accordion-collapse collapse @(ViewData["OpenAccordion"] as List<int> != null && ((List<int>)ViewData["OpenAccordion"]).Contains(i + 1) ? "show" : "")" aria-labelledby="heading@(i + 1)" data-bs-parent="#timeSheetsAccordion">
+                    <div class="accordion-body">
+                        <div class="form-group mb-3">
+                            <label asp-for="TimeSheets[@i].StartTime">Start Time</label>
+                            <input asp-for="TimeSheets[@i].StartTime" type="time" class="form-control" />
+                            <span asp-validation-for="TimeSheets[@i].StartTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TimeSheets[@i].EndTime">End Time</label>
+                            <input asp-for="TimeSheets[@i].EndTime" type="time" class="form-control" />
+                            <span asp-validation-for="TimeSheets[@i].EndTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TimeSheets[@i].Description">Description</label>
+                            <textarea asp-for="TimeSheets[@i].Description" class="form-control"></textarea>
+                            <span asp-validation-for="TimeSheets[@i].Description" class="text-danger"></span>
+                        </div>
+
+                        <button type="button" class="btn btn-danger remove-timeSheet" onclick="removeTimeSheet(this)">Remove TimeSheet</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" class="btn btn-success mt-3" onclick="addTimeSheet()">Add TimeSheet</button>
+
+    <div class="mt-4">
+        <a asp-page="./Index" class="btn btn-secondary">Back</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+<script>
+    function addTimeSheet() {
+        const container = document.getElementById('timeSheetsAccordion');
+        const index = container.children.length; // Current number of TimeSheets
+        const timeSheetHtml = `
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading${index + 1}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index + 1}" aria-expanded="true" aria-controls="collapse${index + 1}">
+                            TimeSheet ${index + 1}
+                        </button>
+                    </h2>
+                    <div id="collapse${index + 1}" class="accordion-collapse collapse show" aria-labelledby="heading${index + 1}" data-bs-parent="#timeSheetsAccordion">
+                        <div class="accordion-body">
+                            <div class="form-group mb-3">
+                                <label for="ViewModel_TimeSheets_${index}__StartTime">Start Time</label>
+                                <input name="TimeSheets[${index}].StartTime" type="time" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="ViewModel_TimeSheets_${index}__EndTime">End Time</label>
+                                <input name="TimeSheets[${index}].EndTime" type="time" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="ViewModel_TimeSheets_${index}__Description">Description</label>
+                                <textarea name="TimeSheets[${index}].Description" class="form-control"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-danger remove-timeSheet" onclick="removeTimeSheet(this)">Remove TimeSheet</button>
+                        </div>
+                    </div>
+                </div>`;
+        container.insertAdjacentHTML('beforeend', timeSheetHtml);
+    }
+
+    function removeTimeSheet(button) {
+        button.closest('.accordion-item').remove();
+    }
+</script>
