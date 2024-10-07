@@ -19,7 +19,8 @@ namespace PlatformDemo.DAL.Data
             modelBuilder.Entity<ServicePlan>()
                 .HasMany(sp => sp.TimeSheets)
                 .WithOne(ts => ts.ServicePlan)
-                .HasForeignKey(ts => ts.ServicePlanId);
+                .HasForeignKey(ts => ts.ServicePlanId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

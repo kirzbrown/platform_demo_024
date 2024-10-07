@@ -14,6 +14,7 @@ public class IndexModel(PlatformDbContext context) : PageModel
 
     public async Task OnGetAsync()
     {
+        // Set the Service Plans from database
         ServicePlans = await context.ServicePlans.Include(i => i.TimeSheets).ToListAsync();
     }
 }

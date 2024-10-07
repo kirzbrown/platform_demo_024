@@ -13,10 +13,12 @@ public class DeleteModel(PlatformDbContext context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
+        //Retrieve service plan by id
         ServicePlan = await context.ServicePlans.FindAsync(id);
 
         if (ServicePlan == null)
         {
+            // Return not found for invalid Ids
             return NotFound();
         }
 
@@ -25,10 +27,12 @@ public class DeleteModel(PlatformDbContext context) : PageModel
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
+        //Retrieve service plan by id
         ServicePlan = await context.ServicePlans.FindAsync(id);
 
         if (ServicePlan != null)
         {
+            // Remove from database
             context.ServicePlans.Remove(ServicePlan);
             await context.SaveChangesAsync();
         }
